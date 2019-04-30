@@ -41,16 +41,6 @@ public class RandomizedQueue<Item> implements Iterable<Item>
 		size++;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void increaseSize()
-	{
-		Item[] temp = (Item[]) new Object[queue.length * 2];
-		for (int i = 0; i < queue.length; i++)
-			temp[i] = queue[i];
-		queue = temp;
-		StdRandom.shuffle(queue);
-	}
-	
 	public Item dequeue()
 	{
 		if (this.isEmpty())
@@ -64,6 +54,27 @@ public class RandomizedQueue<Item> implements Iterable<Item>
 		queue[r] = null;
 		size--;
 		return item;
+	}
+	
+	public Item sample()
+	{
+		if (this.isEmpty())
+			throw new IllegalArgumentException("Queue is empty");
+		int r = StdRandom.uniform(queue.length);
+		while (queue[r] == null)
+			r = StdRandom.uniform(queue.length);
+		return queue[r];
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void increaseSize()
+	{
+		Item[] temp = (Item[]) new Object[queue.length * 2];
+		for (int i = 0; i < queue.length; i++)
+			temp[i] = queue[i];
+		queue = temp;
+		StdRandom.shuffle(queue);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -126,6 +137,15 @@ public class RandomizedQueue<Item> implements Iterable<Item>
 		rq.enqueue("O");
 		rq.enqueue("N");
 		System.out.println(rq);
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.sample());
+		System.out.println(rq.size());
 		System.out.println(rq.dequeue());
 		System.out.println(rq.dequeue());
 		System.out.println(rq.dequeue());
